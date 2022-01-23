@@ -28,6 +28,7 @@ body{
 
 .library{
     display: flex;
+    flex-flow: row wrap;
     justify-content: center;
     align-items: center;
     flex: 1;
@@ -36,6 +37,10 @@ body{
 .card{
     height: 200px;
     width: 150px;
-    border: 2px red solid;
+    background-color: rgb(209, 209, 209);
     margin: 25px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }

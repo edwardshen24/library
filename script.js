@@ -1,3 +1,6 @@
+const library =  document.querySelector(".library");
+const addBook = document.querySelector(".addbutton");
+
 let myLibrary = [];
 
 function Book(title, author, pages) {
@@ -13,6 +16,8 @@ Book.prototype.read = function(){
 
 }
 
-function addBookToLibrary() {
-  // do stuff here
-}
+addBook.addEventListener('click', event => {
+  const card = document.createElement('div');
+  card.className = "card";
+  library.appendChild(card);
+});
