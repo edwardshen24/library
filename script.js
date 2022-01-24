@@ -1,10 +1,8 @@
 const library =  document.querySelector(".library");
 const addBook = document.querySelector(".addbutton");
-
-
+const bookForm = document.querySelector(".modal");
+const cancel = document.querySelector(".cancel");
 let myLibrary = [];
-
-
 
 class Book { //class constructor 
   constructor(title, author, pages){
@@ -18,8 +16,11 @@ class Book { //class constructor
 }
 
 addBook.addEventListener('click', event => {
-  //addBookToLibrary();
-  //bookForm.setAttribute("style", "display: block");
+  bookForm.setAttribute("style", "display: flex; align-items: center; justify-content: center");
+});
+
+cancel.addEventListener('click', event => {
+  bookForm.setAttribute("style", "display: none");
 });
 
 function addBookToLibrary(){
