@@ -25,6 +25,7 @@ body{
 
 .addbutton:hover{
     background-color: #005ff8;
+    cursor:pointer;
 }
 
 .library{
@@ -64,11 +65,12 @@ body{
 }
 
 .submit:hover, .cancel:hover{
-    background-color: #3b3b3b ;
+    cursor:pointer;
 }
 
 #readCheck{
     margin-top: 10px;
+    cursor:pointer;
 }
 
 .modal {
