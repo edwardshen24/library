@@ -3,6 +3,7 @@ const addBook = document.querySelector(".addbutton");
 const bookForm = document.querySelector(".modal");
 const cancel = document.querySelector(".cancel");
 const submit = document.querySelector(".submit");
+const remove = document.createElement('button');
 let myLibrary = [];
 
 class Book { //class constructor 
@@ -28,14 +29,25 @@ submit.addEventListener('click', event => {
   let title = document.getElementById("title").value;
   let author = document.getElementById("author").value;
   let pages = document.getElementById("pages").value;
-  let read =  document.getElementById("readCheck")
+  let read =  document.getElementById("readCheck");
   let isRead;
     if (read.checked)
       isRead = true;
     else  
       isRead = false;
-  addBookToLibrary(title, author, pages,isRead);
-  bookForm.setAttribute("style", "display: none");
+  if (title == ""){
+    alert("Please enter a valid book title.");
+  }
+  else if (author == ""){
+    alert("Please enter a valid author name.");
+  }
+  else if (pages == "" || isNaN(pages)){
+    alert("Please enter a valid page number.");
+  }
+  else{
+    addBookToLibrary(title, author, pages,isRead);
+    bookForm.setAttribute("style", "display: none");
+  }
 });
 
 
@@ -51,20 +63,25 @@ function printCard(title,author,pages,isRead){
   const titleName = document.createElement('div');
   const authorName = document.createElement('div');
   const pagesAmount = document.createElement('div');
+  const container = document.createElement('div');
   const checkMark = document.createElement('input');
-  checkMark.value = "read";
-  const label = document.createElement('label')
-  label.innerHTML = 'Read:';
+  const label = document.createElement('label');
+  label.innerHTML = "Read:"
   checkMark.type ="checkbox";
   card.className = "card";
+  remove.innerHTML = "Remove";
+  remove.setAttribute("style","background-color: #C62828; border-radius: 5px;");
+  container.setAttribute("style","display: flex; flex-direction: row; gap: 5px");
   titleName.textContent = "Title: " + title;
   authorName.textContent ="Author: "+ author;
   pagesAmount.textContent = "Pages: "+ pages;
   card.appendChild(titleName);
   card.appendChild(authorName);
-  card.appendChild(pagesAmount);
-  card.appendChild(label)
-  card.appendChild(checkMark);
+  card.appendChild(pagesAmount); 
+  container.appendChild(label);
+  container.appendChild(checkMark);
+  container.appendChild(remove);
+  card.appendChild(container);
   if (isRead)
     checkMark.checked = true;
   library.appendChild(card);
