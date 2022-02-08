@@ -3,22 +3,23 @@ const addBook = document.querySelector(".addbutton");
 const bookForm = document.querySelector(".modal");
 const cancel = document.querySelector(".cancel");
 const submit = document.querySelector(".submit");
-const remove = document.createElement('button');
+
 let myLibrary = [];
 
-class Book { //class constructor 
-  constructor(title, author, pages){
+class Book { 
+  constructor(title, author, pages, isRead){
   this.title = title;
   this.author = author;
   this.pages = pages;
-}
-  isRead(){
-    return false;
+  this.isRead = isRead;
   }
 }
 
 addBook.addEventListener('click', event => {
   bookForm.setAttribute("style", "display: flex; align-items: center; justify-content: center");
+  document.getElementById("title").value = "";
+  document.getElementById("author").value = "";
+  document.getElementById("pages").value = "";
 });
 
 cancel.addEventListener('click', event => {
@@ -30,11 +31,7 @@ submit.addEventListener('click', event => {
   let author = document.getElementById("author").value;
   let pages = document.getElementById("pages").value;
   let read =  document.getElementById("readCheck");
-  let isRead;
-    if (read.checked)
-      isRead = true;
-    else  
-      isRead = false;
+  let isRead = read.checked ? true: false;
   if (title == ""){
     alert("Please enter a valid book title.");
   }
@@ -45,36 +42,43 @@ submit.addEventListener('click', event => {
     alert("Please enter a valid page number.");
   }
   else{
-    addBookToLibrary(title, author, pages,isRead);
+    addBookToLibrary(title, author, pages, isRead);
     bookForm.setAttribute("style", "display: none");
   }
 });
 
-
 function addBookToLibrary(title,author,pages,isRead){
   const book = new Book(title,author,pages,isRead);
   myLibrary.push(book);
-  printCard(title,author,pages,isRead);
-  console.log(myLibrary)
+  library.textContent = ''; //clear previous cards
+  myLibrary.forEach(function (item, index) {
+    printCard(item , index);
+  });
 }
 
-function printCard(title,author,pages,isRead){
-  const card = document.createElement('div');
+let card;
+function printCard(item, index){ //runs multiple times
+ card = document.createElement('div');
   const titleName = document.createElement('div');
   const authorName = document.createElement('div');
   const pagesAmount = document.createElement('div');
   const container = document.createElement('div');
   const checkMark = document.createElement('input');
   const label = document.createElement('label');
+  const remove = document.createElement('button');
   label.innerHTML = "Read:"
   checkMark.type ="checkbox";
   card.className = "card";
   remove.innerHTML = "Remove";
+  card.setAttribute("data-card", index);
+  remove.setAttribute("data-card", index);
+  remove.id = "remove";
+  card.id = "card";
   remove.setAttribute("style","background-color: #C62828; border-radius: 5px;");
   container.setAttribute("style","display: flex; flex-direction: row; gap: 5px");
-  titleName.textContent = "Title: " + title;
-  authorName.textContent ="Author: "+ author;
-  pagesAmount.textContent = "Pages: "+ pages;
+  titleName.textContent = "Title: " + item.title;
+  authorName.textContent ="Author: "+ item.author;
+  pagesAmount.textContent = "Pages: "+ item.pages;
   card.appendChild(titleName);
   card.appendChild(authorName);
   card.appendChild(pagesAmount); 
@@ -82,10 +86,19 @@ function printCard(title,author,pages,isRead){
   container.appendChild(checkMark);
   container.appendChild(remove);
   card.appendChild(container);
-  if (isRead)
+  if (item.isRead)
     checkMark.checked = true;
   library.appendChild(card);
 }
 
+document.addEventListener( "click", listen );
 
-
+function listen(e){
+  let element = e.target;
+  if (element.id == "remove"){
+    let n = element.dataset.card;
+    let card = document.querySelector(` [data-card = "${n}"] `);
+    card.remove();
+  }
+}
+ //todo: delete object from array
