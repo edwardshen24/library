@@ -99,6 +99,9 @@ function listen(e){
     let n = element.dataset.card;
     let card = document.querySelector(` [data-card = "${n}"] `);
     card.remove();
+    myLibrary.splice(n, 1);
+    let cardExist =  document.getElementById('card');
+    if (typeof(cardExist) == 'undefined' && cardExist == null)
+      myLibrary = [];
   }
 }
- //todo: delete object from array
