@@ -101,7 +101,7 @@ function listen(e){
     card.remove();
     myLibrary.splice(n, 1);
     let cardExist =  document.getElementById('card');
-    if (typeof(cardExist) == 'undefined' && cardExist == null)
+    if (typeof(cardExist) == 'undefined' || cardExist == null)
       myLibrary = [];
   }
 }
